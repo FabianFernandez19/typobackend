@@ -11,7 +11,7 @@ use App\Models\UserHasLogro;
 use App\Models\Agendamiento;
 use Illuminate\Support\Carbon;
 
-class reporte_cumplimientoApiController extends Controller
+class Reporte_cumplimientoApiController extends Controller
 
 {
 
