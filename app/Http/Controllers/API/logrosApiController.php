@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -101,7 +101,7 @@ class LogrosApiController extends Controller
         }
         
     }
-    return response()->json(['logros' => $logros, 'message' => 'Logro asignado correctamente'], 200);
+    //return response()->json(['logros' => $logros, 'message' => 'Logro asignado correctamente'], 200);
 
 
 }  

@@ -21,6 +21,15 @@ class TipomascotaApiController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     */
+    public function indexUser()
+    {
+        $tipomascota = Tipomascota::all();
+        return response()->json($tipomascota, 200);
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)

@@ -51,7 +51,7 @@ class ActividadApiController extends Controller
      */
     public function show($id)
     {
-        $actividad = Actividad::find($id);
+        $actividad = Actividad::with('tipomascota')->where('id',$id)->first();
         return response()->json($actividad, 200);
     }
 
@@ -90,7 +90,7 @@ class ActividadApiController extends Controller
         if (!$actividad) {
             return response()->json(['message' => 'Actividad no encontrada'], 404);
         }
-
+        Tipomascota_has_actividad::where("actividad_id", $id)->delete();
         $actividad->delete();
         return response()->json(['message' => 'Actividad eliminada correctamente'], 200);
     }
@@ -160,17 +160,30 @@ public function obtenerActividadesMascota($id){
 
 
 
-
-
-
-
-
-
-
-
 }
 
 
+public function asignarActividadTipoMascota(Request $request)
+{
+   
+    $request->validate([
+        'actividad_id' => 'required|integer',
+        'tipo_mascota_id' => 'required|array',
+    ]);
+
+    Tipomascota_has_actividad::where('actividad_id', $request->input('actividad_id'))->delete();
+
+    foreach($request->tipo_mascota_id as $tipo) {
+        $actividadTipoMascota = new Tipomascota_has_actividad();
+        $actividadTipoMascota->actividad_id = $request->input('actividad_id');
+        $actividadTipoMascota->tipomascota_id = $tipo;
+        $actividadTipoMascota->save();
+    }
+    
+
+    
+    return response()->json(['mensaje' => 'Actividad asignada al tipo de mascota correctamente'], 201);
+}
 
 
 

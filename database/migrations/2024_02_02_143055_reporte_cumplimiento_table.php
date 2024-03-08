@@ -18,6 +18,7 @@ class ReporteCumplimientoTable extends Migration
             $table->string('mes');
             $table->decimal('porcentaje_cumplimiento', 5, 2);
             $table->unsignedInteger('total_agendamientos_cumplidos')->nullable();
+            $table->unsignedInteger('agendamientos_no_cumplidos')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
         });
