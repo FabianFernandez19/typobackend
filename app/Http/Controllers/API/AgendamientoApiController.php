@@ -10,25 +10,42 @@ use App\Models\Agendamiento;
 use App\Models\Informacion;
 use App\Models\User;
 use App\Models\Reporte_cumplimiento;
+use App\Http\Controllers\API\LogrosApiController;
+
 
 use App\Http\Controllers\Controller;
 
 class AgendamientoApiController extends Controller
 {
+
+    protected $logroController;
+    public function __construct(LogrosApiController $logroController)
+    {
+        $this->logroController = $logroController;
+    }
+
     public function index()
     {
-        $agendamiento = Agendamiento::all();
-        return response()->json($agendamiento, 200);
+        //$agendamiento = Agendamiento::all();
+        //return response()->json($agendamiento, 200);
+        $consulta = DB::table('agendamiento')->join('informacion AS i','agendamiento.infomascota_id', '=', 'i.id')
+            ->join('users AS u','agendamiento.user_id', '=', 'u.id')
+            ->join('actividad AS ac','agendamiento.actividades_id', '=', 'ac.id')
+            ->select('agendamiento.*', 'i.id', 'i.Nombre_Mascota', 'u.id', 'u.name', 'ac.id', 'ac.nombre_actividad')
+            ->get();
+        return response()->json($consulta, 200);
     }
+
 
     public function store(Request $request)
     {
         $agendamiento = new Agendamiento();
         $agendamiento->tiempo_asignado_actividad = $request->tiempo_asignado_actividad;
         $agendamiento->Fecha_Agendamiento = $request->Fecha_Agendamiento;
-        $agendamiento->confirmacion = $request->confirmacion;
+        $agendamiento->cumplida = $request->cumplida;
+        $agendamiento->infomascota_id = $request->infomascota_id;
+        $agendamiento->actividades_id = $request->actividades_id;
         $agendamiento->user_id = $request->user_id;
-        $agendamiento->reportecumplimiento_id = $request->reportecumplimiento_id;
         $agendamiento->save();
         return response()->json($agendamiento, 200);
     }
@@ -44,9 +61,10 @@ class AgendamientoApiController extends Controller
         $agendamiento = Agendamiento::find($id);
         $agendamiento->tiempo_asignado_actividad = $request->tiempo_asignado_actividad;
         $agendamiento->Fecha_Agendamiento = $request->Fecha_Agendamiento;
-        $agendamiento->confirmacion = $request->confirmacion;
+        $agendamiento->cumplida = $request->cumplida;
+        $agendamiento->infomascota_id = $request->infomascota_id;
+        $agendamiento->actividades_id = $request->actividades_id;
         $agendamiento->user_id = $request->user_id;
-        $agendamiento->reportecumplimiento_id = $request->reportecumplimiento_id;
         $agendamiento->save();
         return response()->json($agendamiento, 200);
     }
@@ -148,6 +166,36 @@ public function actualizarTiempoTotalPorMascota(Request $request)
         return response()->json(['mensaje' => 'Agendamiento no valido'], 401);
     }
 
+
+
+    // Verificar si el agendamiento ya está marcado como cumplido
+if ($agendamiento->cumplida) {
+    return response()->json(['mensaje' => 'El agendamiento ya ha sido marcado como cumplido previamente'], 401);
+}
+
+
+
+
+
+
+    $date1=date("Y-m-d");
+    //return response()->json(['mensaje' => $date1], 200);
+    //2024-03-06 13:16:19
+    //2024-03-05 12:00:00
+    //$days = date_diff($date1,$agendamiento->Fecha_Agendamiento);
+
+    $date1=date("Y-m-d");
+    $date1_1=date_create($date1);
+
+    $date2 = substr($agendamiento->Fecha_Agendamiento, 0, stripos($agendamiento->Fecha_Agendamiento, " ")+1);
+    $date1_2=date_create($date2);
+    $days = date_diff($date1_1,$date1_2);
+    $cantidad = $days->format("%R%a");
+    //return response()->json(['mensaje' => intval($cantidad)], 200);
+    if (intval($cantidad)<0) {
+        return response()->json(['mensaje' => 'Agendamiento no valido, no se puede realizar la accion ya que el tiempo caduco'], 401);
+    } 
+
     $tiempo = $agendamiento->tiempo_asignado_actividad;
 
     $agendamiento->cumplida=1;
@@ -167,7 +215,11 @@ public function actualizarTiempoTotalPorMascota(Request $request)
     $mascota->tiempo_total=$result;
     $mascota->save();
 
-/*
+
+
+    $this->logroController->asignarLogrosAMascotas();
+
+    /*
     $user = Auth::user();
     $agendamientos = Agendamiento::where("user_id", $user->id)->get();
 

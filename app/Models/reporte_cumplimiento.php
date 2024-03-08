@@ -15,6 +15,7 @@ class reporte_cumplimiento extends Model
         'mes',
         'porcentaje_cumplimiento',
         'total_agendamientos_cumplidos',
+        'agendamientos_no_cumplidos',
         'user_id'
 
  

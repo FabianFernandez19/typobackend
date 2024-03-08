@@ -10,6 +10,13 @@ use App\Models\Admin;
 
 class AuthController extends Controller
 {
+
+    public $logroController;
+
+    
+
+    
+
     public function signUp(Request $request)
     {
         $request->validate([
@@ -32,21 +39,10 @@ class AuthController extends Controller
 
         // Asignación del rol
         $user->assignRole('User');
-        
-        $tokenResult = $user->createToken('Personal Access Token');
-        
-        $token = $tokenResult->token;
-        
-        if ($request->remember_me)
-            $token->expires_at = Carbon::now()->addWeeks(1);
-        $token->save();
-        
+
         return response()->json([
-            'user' => $user,
-            'access_token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer',
-            'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString()
-        ]);
+            'message' => 'Successfully created user!'
+        ], 201);
     }
 
     public function login(Request $request)

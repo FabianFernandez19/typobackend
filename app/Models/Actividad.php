@@ -12,7 +12,6 @@ class Actividad extends Model
     protected $fillable = [
         'nombre_actividad',
         'descripcion_actividad',
-        'tipomascota_id'
         //'cumplida'
 
         
@@ -30,7 +29,7 @@ class Actividad extends Model
 
 public function tipomascota()
 {
-    return $this->belongsTo(Tipomascota::class, 'tipomascota_id');
+    return $this->hasMany(tipomascota_has_actividad::class, 'actividad_id','id');
 }
   
 

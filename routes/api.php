@@ -45,8 +45,14 @@ Route::post('/actualizar-tiempo-mascotas', [AgendamientoApiController::class, 'a
 Route::post('/asignar-logros', [LogrosApiController::class, 'asignarLogrosAMascotas'])->name('logros.asignar_logros');
 Route::get('/generar-reporte-cumplimiento-mensual', [reporte_cumplimientoApiController::class, 'generarReporteCumplimientoMensual']);
 
+
+
+
 Route::get('/reportes/{usuarioId}/cumplimiento-mensual', [reporte_cumplimientoApiController::class, 'generarReporteCumplimientoMensualPorUsuario'])->name('reporte.cumplimiento.mensual');
 Route::get('/obtenerActividadesMascota/{id}', [ActividadApiController::class, 'obtenerActividadesMascota']);
+
+Route::post('/asignar-actividad-tipo-mascota', [ActividadApiController::class, 'asignarActividadTipoMascota']);
+
 
 
 
@@ -54,8 +60,8 @@ Route::get('/obtenerActividadesMascota/{id}', [ActividadApiController::class, 'o
 
 //Route::post('Agendamiento',[AgendamientoApiController::class,"store"] );
 //Route::get('Agendamiento',[AgendamientoApiController::class,"index"] );
-Route::apiResource('Actividad', ActividadApiController ::class);
-Route::apiResource('Agendamiento',AgendamientoApiController::class );
+//Route::apiResource('Actividad', ActividadApiController ::class);
+//Route::apiResource('Agendamiento',AgendamientoApiController::class );
 Route::apiResource('User_has_logros',UserhaslogrosApiController::class );
 
 //Route::post('Agendamiento',[AgendamientoApiController::class,"store"] );
@@ -100,9 +106,13 @@ Route::group([
 
 
 
-          Route::apiResource('logros', logrosApiController::class);
+          
           //Route::get('Agendamiento',[AgendamientoApiController::class,"index"] );
+          Route::apiResource('Agendamiento',AgendamientoApiController::class );
+          Route::apiResource('Actividad', ActividadApiController ::class);
          
+
+          Route::get('/agendamientos', [reporte_cumplimientoApiController::class,  'obtenerTodosAgendamientosConPorcentajeCumplimiento']);
 
           
 
@@ -117,12 +127,13 @@ Route::group([
           //Route::apiResource('Agendamiento',AgendamientoApiController::class );
           Route::apiResource('Actividad', ActividadApiController ::class);
           Route::apiResource('Informacion', InformacionApiController::class);
+          Route::apiResource('logros', logrosApiController::class);
 
           Route::get("/Informacion/user/{id}", [InformacionApiController::class,"getMascotasByUserId"]);
           });
 
           Route::group(['middleware' => ['role:User']], function () {
-          Route::get('Tipomascota-user', [TipomascotaApiController::class,"index"]);
+          Route::get('Tipomascota-user', [TipomascotaApiController::class,"indexUser"]);
           //Route::get('Agendamiento-user',[AgendamientoApiController::class,"index"] );
           Route::get('Actividad-user', [ActividadApiController ::class,"index"]);
           Route::get('Informacion-user', [InformacionApiController::class,"index"]);
