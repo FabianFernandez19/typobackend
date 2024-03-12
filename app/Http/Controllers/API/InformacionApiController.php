@@ -64,7 +64,7 @@ class InformacionApiController extends Controller
             $informacion->Peso =$request->Peso;
             $informacion->Tamaño =$request->Tamaño;
             $informacion->Sexo =$request->Sexo;
-            $informacion->tiempoTotal =$request->tiempoTotal;
+            $informacion->tiempo_total = $request->tiempo_total;
             $informacion->user_id =$request->user_id;
             $informacion->id_tipomascota =$request->id_tipomascota;
             $informacion->user_id =$request->user_id;
