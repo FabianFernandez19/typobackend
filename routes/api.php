@@ -124,7 +124,8 @@ Route::group([
           //Route::post('Tipomascota', [TipomascotaApiController::class,"store"]);
 
           Route::group(['middleware' => ['role:Administrator']], function () {
-          Route::apiResource('Tipomascota', TipomascotaApiController::class);
+          Route::apiResource('Tipomascota', TipomascotaApiController::class)->names([
+          'index' => 'tipomascota.index']);
           //Route::apiResource('Agendamiento',AgendamientoApiController::class );
           Route::apiResource('Actividad', ActividadApiController ::class);
           Route::apiResource('Informacion', InformacionApiController::class);
