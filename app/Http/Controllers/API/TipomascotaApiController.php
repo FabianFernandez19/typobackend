@@ -65,7 +65,6 @@ class TipomascotaApiController extends Controller
      */
     public function destroy($id)
     {
-
         $tipomascota = Tipomascota::find($id);
         if($tipomascota){
         $tipomascota->delete();
@@ -73,6 +72,15 @@ class TipomascotaApiController extends Controller
     }else{
         return response()->json(['message' => 'Tipo mascota no encontrada'], 404);
     }
-
     }
+
+    public function getCantidadmascota()
+{
+    $mascotas =DB::table('informacion')
+        ->join('tipomascota', 'tipomascota.id', '=', 'informacion.id_tipomascota')
+        ->select('tipomascota.Tipo_Mascota', DB::raw('COUNT(*) as cantidad'))
+        ->groupBy('tipomascota.Tipo_Mascota')
+        ->get();
+        return response()->json($mascotas, 200);
+}
 }
