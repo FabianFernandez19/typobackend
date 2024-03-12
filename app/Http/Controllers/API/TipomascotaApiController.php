@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Tipomascota;
 use App\Models\Informacion;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\DB;
 
 class TipomascotaApiController extends Controller
 {
