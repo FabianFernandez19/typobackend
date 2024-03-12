@@ -84,6 +84,7 @@ Route::group([
     Route::post('login', [AuthController::class,"login"]);
     Route::post('signup', [AuthController::class,"signup"]);
     Route::post('signupadmin', [AuthController::class,"signupadmin"]);
+    Route::get('Cantidadmascota', [TipomascotaApiController::class,'getCantidadmascota']);
 
     Route::group([
       'middleware' => 'auth:api'
@@ -128,7 +129,6 @@ Route::group([
           Route::apiResource('Actividad', ActividadApiController ::class);
           Route::apiResource('Informacion', InformacionApiController::class);
           Route::apiResource('logros', logrosApiController::class);
-
           Route::get("/Informacion/user/{id}", [InformacionApiController::class,"getMascotasByUserId"]);
           });
 
