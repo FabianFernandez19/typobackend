@@ -14,6 +14,8 @@ use App\Http\Controllers\API\UsuarioApiController;
 use App\Http\Controllers\API\reporte_cumplimientoApiController;
 use App\Http\Controllers\API\LogrosApiController;
 use App\Http\Controllers\API\UserhaslogrosApiController; 
+use App\Http\Controllers\API\mascota_has_logrosApiController; 
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,18 +32,18 @@ use App\Http\Controllers\API\UserhaslogrosApiController;
 // Route::apiResource('Agendamiento',AgendamientoApiController::class );
 
 //Route::apiResource('Tipomascota', TipomascotaApiController::class);
-Route::post('reporte_cumplimiento', [reporte_cumplimientoApiController::class, 'guardar']);
+//Route::post('reporte_cumplimiento', [reporte_cumplimientoApiController::class, 'guardar']);
 
 Route::post('/logros/asignar', [LogrosApiController::class, 'asignarLogro']);
-Route::get('usuarios/{usuario_id}/logros', [LogrosApiController::class, 'logrosAsignadosAUsuario']);
-Route::apiResource('reporte_cumplimiento', reporte_cumplimientoApiController ::class);
+//Route::get('usuarios/{usuario_id}/logros', [LogrosApiController::class, 'logrosAsignadosAUsuario']);
+//Route::apiResource('reporte_cumplimiento', reporte_cumplimientoApiController ::class);
 Route::put('/actividades/{id}/marcarcomocumplida', [ActividadApiController::class, 'marcarComoCumplida']);
 //Route::get('/agendamiento/{id}/calcular-tiempo-acumulado', 'App\Http\Controllers\API\AgendamientoApiController@calcularTiempoAcumulado');
 
-Route::get('/agendamientos/{user_id}/calcular-tiempo-acumulado', [AgendamientoApiController::class, 'calcularTiempoAcumuladoUsuario']);
-Route::get('/usuarios/{userId}/tiempo-total', [UsuarioApiController::class, 'obtenerTiempoTotal']);
+//Route::get('/agendamientos/{user_id}/calcular-tiempo-acumulado', [AgendamientoApiController::class, 'calcularTiempoAcumuladoUsuario']);
+//Route::get('/usuarios/{userId}/tiempo-total', [UsuarioApiController::class, 'obtenerTiempoTotal']);
 
-Route::post('/actualizar-tiempo-mascotas', [AgendamientoApiController::class, 'actualizarTiempoTotalPorMascota']);
+//Route::post('/actualizar-tiempo-mascotas', [AgendamientoApiController::class, 'actualizarTiempoTotalPorMascota']);
 Route::post('/asignar-logros', [LogrosApiController::class, 'asignarLogrosAMascotas'])->name('logros.asignar_logros');
 Route::get('/generar-reporte-cumplimiento-mensual', [reporte_cumplimientoApiController::class, 'generarReporteCumplimientoMensual']);
 
@@ -84,7 +86,7 @@ Route::group([
     Route::post('login', [AuthController::class,"login"]);
     Route::post('signup', [AuthController::class,"signup"]);
     Route::post('signupadmin', [AuthController::class,"signupadmin"]);
-    Route::get('Cantidadmascota', [TipomascotaApiController::class,'getCantidadmascota']);
+    
 
     Route::group([
       'middleware' => 'auth:api'
@@ -94,18 +96,28 @@ Route::group([
 
           //Route::apiResource('Informacion', InformacionApiController::class);
           //Route::apiResource('Agendamiento',AgendamientoApiController::class );
-          //Route::apiResource('Tipomascota', TipomascotaApiController::class);
+          Route::apiResource('Tipomascota', TipomascotaApiController::class);
           //Route::apiResource('Actividad', ActividadApiController ::class);
           //Route::apiResource('Informacion_Actividad', Informacion_ActividadController::class);
           //Route::apiResource('Home', HomeApiController::class);
-         // Route::apiResource('reporte_cumplimiento', reporte_cumplimientoApiController::class);
+          Route::apiResource('reporte_cumplimiento', reporte_cumplimientoApiController::class);
+
+          Route::apiResource('mascota_has_logros', mascota_has_logrosApiController::class);
+
+
          
+
+          Route::get('usuarios/{idUsuario}', [UsuarioApiController::class, 'obtenerInformacionUsuario']);
 
          //Route::post('reporte_cumplimiento', [reporte_cumplimientoApiController::class, 'guardar']);
+
+         Route::get('/agendamientos/{idMascota}', [AgendamientoApiController::class, 'agendamientosPorMascota']);
+        
+         Route::get('Cantidadmascota', [TipomascotaApiController::class, 'getCantidadmascota']);
          
 
 
-
+         Route::post('/actualizar-tiempo-mascotas', [AgendamientoApiController::class, 'actualizarTiempoTotalPorMascota']);
 
           
           //Route::get('Agendamiento',[AgendamientoApiController::class,"index"] );
@@ -129,6 +141,7 @@ Route::group([
           Route::apiResource('Actividad', ActividadApiController ::class);
           Route::apiResource('Informacion', InformacionApiController::class);
           Route::apiResource('logros', logrosApiController::class);
+
           Route::get("/Informacion/user/{id}", [InformacionApiController::class,"getMascotasByUserId"]);
           });
 

@@ -141,6 +141,82 @@ class UsuarioApiController extends Controller
 
 
 
+    //FUNCION PARA RECUPERAR LA INFORMACION RELEVANTE DEL USUARIO
+
+   /* public function obtenerInformacionUsuario($id)
+    {
+        // Buscar al usuario por su ID
+        $usuario = User::findOrFail($id);
+    
+        // Obtener todas las mascotas del usuario
+        $mascotas = $usuario->informaciones;
+    
+        // Inicializar arrays para almacenar la información de todas las mascotas
+        $agendamientos = [];
+        $logrosMascotas = [];
+        $reportesCumplimiento = [];
+    
+        // Iterar sobre cada mascota del usuario
+        foreach ($mascotas as $mascota) {
+            // Obtener los agendamientos de la mascota actual
+            $agendamientosMascota = $mascota->agendamientos;
+    
+            // Agregar los agendamientos de la mascota actual al array general
+            $agendamientos = array_merge($agendamientos, $agendamientosMascota->toArray());
+    
+            // Verificar si la relación de logros está definida para la mascota actual
+            if ($mascota->logros) {
+                // Obtener los logros asignados a la mascota actual
+                $logrosMascota = $mascota->logros;
+    
+                // Agregar los logros de la mascota actual al array general
+                $logrosMascotas[] = $logrosMascota->toArray();
+            }
+    
+            // Verificar si la relación de reporte_cumplimiento está definida para la mascota actual
+            if ($mascota->reporte_cumplimiento) {
+                // Obtener el reporte de cumplimiento del usuario para la mascota actual
+                $reporteCumplimiento = $mascota->reporte_cumplimiento;
+    
+                // Agregar el reporte de cumplimiento de la mascota actual al array general
+                $reportesCumplimiento[] = $reporteCumplimiento->toArray();
+            }
+        }
+    
+        // Devolver los datos obtenidos como respuesta
+        return response()->json([
+            'usuario' => $usuario,
+            'mascotas' => $mascotas,
+            'agendamientos' => $agendamientos,
+            'logros_mascotas' => $logrosMascotas,
+            'reportes_cumplimiento' => $reportesCumplimiento
+        ], 200);
+    }*/
+
+    public function obtenerInformacionUsuario($id)
+{
+    $usuario = User::findOrFail($id);    
+    
+
+    // Obtener todas las mascotas asociadas al usuario con sus agendamientos y logros
+    $mascotas = $usuario->informaciones()->with(['agendamientos', 'logros'])->get();
+
+    // Obtener el reporte de cumplimiento del usuario
+    $reporteCumplimiento = $usuario->reporteCumplimiento;
+
+    return response()->json([
+        'usuario' => $usuario,
+        'mascotas' => $mascotas,
+        'reporte_cumplimiento' => $reporteCumplimiento
+    ], 200);
+}
+
+
+
+
+
+
+
 
 
 }

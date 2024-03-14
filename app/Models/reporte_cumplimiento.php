@@ -24,6 +24,7 @@ class reporte_cumplimiento extends Model
 
     public $timestamps = false;
 
+
     // Define la relación con el modelo User
     /*public function user()
     {

@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      * @return void
      */
    
-   /*  protected function schedule(Schedule $schedule)
+   protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
         /*$schedule->call(function () {
@@ -36,15 +36,17 @@ class Kernel extends ConsoleKernel
             $actividad->descripcion_actividad="Actividad#";
             $actividad->save();
         })->everyMinute();
+        */
         $schedule->call('App\Http\Controllers\API\reporte_cumplimientoApiController@generarReporteCumplimientoMensual')->everyMinute();
-    }*/
+    }
 
 
-    protected function schedule(Schedule $schedule)
+ 
+   /*  protected function schedule(Schedule $schedule)
 {
     $schedule->call('App\Http\Controllers\API\reporte_cumplimientoApiController@generarReporteCumplimientoMensual')
              ->monthlyOn(1, '00:01');
-}
+}*/
 
 
     /**

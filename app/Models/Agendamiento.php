@@ -36,6 +36,8 @@ class Agendamiento extends Model
     {
         return $this->hasMany(Actividad::class, 'agendamiento_id', 'id');
     }
+
+
 }
 
      

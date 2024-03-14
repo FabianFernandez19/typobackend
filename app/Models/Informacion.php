@@ -32,6 +32,19 @@ class informacion extends Model
         return $this->hasMany(Tipomascota::class, 'id_tipo', 'id');
   }
 
+  public function logros()
+  {
+      return $this->belongsToMany(Logros::class, 'mascota_has_logros', 'mascota_id', 'logros_id');
+  }
+
+
+
+
+    public function agendamientos()
+    {
+        return $this->hasMany(Agendamiento::class, 'infomascota_id', 'id');
+    }
+
  // public function actividad(){
    //  return $this->belongsToMany(Actividad::class)->withPivot('id');
  //}

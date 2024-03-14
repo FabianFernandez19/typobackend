@@ -39,6 +39,36 @@ class User extends Authenticatable
     }
 
 
+  /*  public function informacion()
+{
+    return $this->hasMany(Informacion::class);
+}*/
+
+
+
+public function agendamientos()
+{
+    return $this->hasMany(Agendamiento::class);
+}
+
+
+
+
+public function informaciones()
+    {
+        return $this->hasMany(Informacion::class);
+    }
+
+
+    public function reporteCumplimiento()
+{
+    return $this->hasOne(reporte_cumplimiento::class);
+}
+
+
+
+
+
   
 
     /**

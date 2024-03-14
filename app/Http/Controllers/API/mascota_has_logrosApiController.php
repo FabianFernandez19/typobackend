@@ -8,15 +8,38 @@ use App\Models\Mascota_has_logros;
 use App\Models\Informacion;
 use App\Models\Logros;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 class mascota_has_logrosApiController extends Controller
 {
 
 
     public function index()
     {
-    $mascotaHasLogros = Mascota_has_logros::with('informacion:id,name', 'logros:id,tipoLogro')->get();
+        $user = Auth::user();
+    //$mascotaHasLogros = Mascota_has_logros::with('mascota:id,Nombre_Mascota,user_id', 'logros:id,tipoLogro')->get();
+    /*$mascotaHasLogros = Mascota_has_logros::with(["mascota" => function($q) use ($user) {
+        $q->where('informacion.user_id', '=', $user->id);
+    }, 'logros'])->get();*/
 
-    return response()->json($mascotaHasLogros);
+    /*select logros.*, i.id, i.Nombre_Mascota FROM logros 
+inner join mascota_has_logros AS ml on ml.logros_id = logros.id 
+inner join informacion AS i ON ml.mascota_id =  i.id
+where i.user_id = 7; */
+    $consulta = DB::table('logros')
+            ->join('mascota_has_logros AS ml','ml.logros_id', '=', 'logros.id')
+            ->join('informacion AS i','ml.mascota_id', '=', 'i.id')
+            ->where('i.user_id', '=',$user->id)
+            ->select('logros.*', 'i.id', 'i.Nombre_Mascota')
+            ->get();
+
+
+
+
+
+
+    return response()->json($consulta);
     }
 
     public function store(Request $request)

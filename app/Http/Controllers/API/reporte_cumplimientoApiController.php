@@ -10,6 +10,7 @@ use App\Models\logros;
 use App\Models\UserHasLogro;
 use App\Models\Agendamiento;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class reporte_cumplimientoApiController extends Controller
 
@@ -18,9 +19,13 @@ class reporte_cumplimientoApiController extends Controller
     
     public function index()
     {
-
-        $reporte_cumplimiento = Reporte_cumplimiento::all(); // Obtener todos los registros de la tabla de logros
+        $user = Auth::user();
+        $reporte_cumplimiento = Reporte_cumplimiento::where('user_id', $user->id)->get();
         return response()->json($reporte_cumplimiento, 200);
+
+
+        /*$reporte_cumplimiento = Reporte_cumplimiento::all(); // Obtener todos los registros de la tabla de logros
+        return response()->json($reporte_cumplimiento, 200);*/
 
     }
 

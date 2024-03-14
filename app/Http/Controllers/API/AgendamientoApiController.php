@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 use App\Models\Agendamiento;
@@ -26,12 +27,14 @@ class AgendamientoApiController extends Controller
 
     public function index()
     {
+        $user = Auth::user();
         //$agendamiento = Agendamiento::all();
         //return response()->json($agendamiento, 200);
         $consulta = DB::table('agendamiento')->join('informacion AS i','agendamiento.infomascota_id', '=', 'i.id')
             ->join('users AS u','agendamiento.user_id', '=', 'u.id')
             ->join('actividad AS ac','agendamiento.actividades_id', '=', 'ac.id')
             ->select('agendamiento.*', 'i.id', 'i.Nombre_Mascota', 'u.id', 'u.name', 'ac.id', 'ac.nombre_actividad')
+            ->where('agendamiento.user_id', '=',$user->id)
             ->get();
         return response()->json($consulta, 200);
     }
@@ -156,25 +159,31 @@ return response()->json(['actividades' => $timeTotal], 200);
 
 
 public function actualizarTiempoTotalPorMascota(Request $request)
-{
-   
-    $agendamiento_id = $request->agendamiento_id;
+{    
 
-    $agendamiento = Agendamiento::find($agendamiento_id);
+     // Obtener el usuario autenticado
+     $user = Auth::user();
 
-    if (!$agendamiento) {
-        return response()->json(['mensaje' => 'Agendamiento no valido'], 401);
-    }
+     // Obtener el ID del agendamiento de la solicitud
+     $agendamiento_id = $request->agendamiento_id;
 
+     // Buscar el agendamiento en la base de datos
+     $agendamiento = Agendamiento::find($agendamiento_id);
 
+     // Verificar si el agendamiento existe
+     if (!$agendamiento) {
+         return response()->json(['mensaje' => 'Agendamiento no válido'], 401);
+     }
 
-    // Verificar si el agendamiento ya está marcado como cumplido
-if ($agendamiento->cumplida) {
-    return response()->json(['mensaje' => 'El agendamiento ya ha sido marcado como cumplido previamente'], 401);
-}
+     // Verificar si el agendamiento pertenece al usuario autenticado
+     if ($agendamiento->user_id !== $user->id) {
+         return response()->json(['mensaje' => 'No tienes permiso para marcar este agendamiento como cumplido, este pertenece a otro usuario'], 401);
+     }
 
-
-
+     // Verificar si el agendamiento ya está marcado como cumplido
+     if ($agendamiento->cumplida) {
+         return response()->json(['mensaje' => 'El agendamiento ya ha sido marcado como cumplido previamente'], 401);
+     }
 
 
 
@@ -252,6 +261,18 @@ if ($agendamiento->cumplida) {
 
     
     return response()->json(['mensaje' => 'Tiempos totales de mascotas actualizados correctamente'], 200);
+}
+
+
+public function agendamientosPorMascota($idMascota)
+{
+    $mascota = Informacion::findOrFail($idMascota);
+    
+    // Obtén los agendamientos asociados a la mascota específica
+    $agendamientos = $mascota->agendamientos;
+
+    // Devuelve los agendamientos en formato JSON
+    return response()->json($agendamientos);
 }
 
 
