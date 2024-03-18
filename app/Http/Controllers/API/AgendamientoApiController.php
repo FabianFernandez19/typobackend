@@ -45,12 +45,19 @@ class AgendamientoApiController extends Controller
         $agendamiento = new Agendamiento();
         $agendamiento->tiempo_asignado_actividad = $request->tiempo_asignado_actividad;
         $agendamiento->Fecha_Agendamiento = $request->Fecha_Agendamiento;
+        if(strlen($request->cumplida)>0){
+            $agendamiento->cumplida = $request->cumplida;   
+        }else{
+            $agendamiento->cumplida = false;
+        }
         $agendamiento->cumplida = $request->cumplida;
         $agendamiento->infomascota_id = $request->infomascota_id;
         $agendamiento->actividades_id = $request->actividades_id;
         $agendamiento->user_id = $request->user_id;
         $agendamiento->save();
         return response()->json($agendamiento, 200);
+
+        
     }
 
     public function show($id)
