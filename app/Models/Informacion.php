@@ -37,6 +37,13 @@ class informacion extends Model
       return $this->belongsToMany(Logros::class, 'mascota_has_logros', 'mascota_id', 'logros_id');
   }
 
+  public function logrosAsignados($mascotaId)
+{
+    // Recupera los logros asignados a la mascota con el ID dado
+    return $this->hasManyThrough(Logros::class, mascota_has_logros::class, 'mascota_id', 'id', 'id', 'logros_id')
+        ->where('mascota_id', $mascotaId)->get();
+}
+
 
 
 

@@ -38,6 +38,7 @@ class LogrosApiController extends Controller
         'tiempoSemanal' => 'required|date_format:H:i:s',
         
     ]);
+    
 
     $logro = Logros::create($request->all());
     return response()->json($logro, 201);

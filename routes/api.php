@@ -51,7 +51,7 @@ Route::get('/generar-reporte-cumplimiento-mensual', [reporte_cumplimientoApiCont
 
 
 Route::get('/reportes/{usuarioId}/cumplimiento-mensual', [reporte_cumplimientoApiController::class, 'generarReporteCumplimientoMensualPorUsuario'])->name('reporte.cumplimiento.mensual');
-Route::get('/obtenerActividadesMascota/{id}', [ActividadApiController::class, 'obtenerActividadesMascota']);
+
 
 Route::post('/asignar-actividad-tipo-mascota', [ActividadApiController::class, 'asignarActividadTipoMascota']);
 
@@ -94,7 +94,7 @@ Route::group([
         Route::get('logout', [AuthController::class,"logout"]);
         Route::get('user', [AuthController::class, 'user']);
 
-          //Route::apiResource('Informacion', InformacionApiController::class);
+          Route::apiResource('Informacion', InformacionApiController::class);
           //Route::apiResource('Agendamiento',AgendamientoApiController::class );
           Route::apiResource('Tipomascota', TipomascotaApiController::class);
           //Route::apiResource('Actividad', ActividadApiController ::class);
@@ -103,6 +103,13 @@ Route::group([
           Route::apiResource('reporte_cumplimiento', reporte_cumplimientoApiController::class);
 
           Route::apiResource('mascota_has_logros', mascota_has_logrosApiController::class);
+
+          Route::get('/obtenerActividadesMascota/{id}', [ActividadApiController::class, 'obtenerActividadesMascota']);
+          
+          Route::get('/mascotas/{mascotaId}/logros', [mascota_has_logrosApiController::class, 'obtenerLogrosDeMascota']);
+
+          Route::get('/getMascotasByUserId/{id}', [InformacionApiController::class, 'getMascotasByUserId']);
+
 
 
          
@@ -123,6 +130,10 @@ Route::group([
           //Route::get('Agendamiento',[AgendamientoApiController::class,"index"] );
           Route::apiResource('Agendamiento',AgendamientoApiController::class );
           Route::apiResource('Actividad', ActividadApiController ::class);
+
+          Route::apiResource('logros', logrosApiController ::class);
+
+          
          
 
           Route::get('/agendamientos', [reporte_cumplimientoApiController::class,  'obtenerTodosAgendamientosConPorcentajeCumplimiento']);

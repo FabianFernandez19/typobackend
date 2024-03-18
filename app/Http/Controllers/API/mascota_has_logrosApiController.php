@@ -63,7 +63,29 @@ where i.user_id = 7; */
    
         return response()->json(['message' => 'mascotaHasLogro eliminado correctamente'], 200);
     }
-   
+
+    public function obtenerLogrosDeMascota($mascotaId)
+    {
+        // Encuentra la información de la mascota por su ID
+        $informacionMascota = Informacion::find($mascotaId);
+
+        if (!$informacionMascota) {
+            // Si la mascota no existe, puedes manejar el error adecuadamente
+            return response()->json(['error' => 'Mascota no encontrada'], 404);
+        }
+
+        // Verifica si el usuario autenticado es propietario de la mascota
+        if ($informacionMascota->user_id !== Auth::id()) {
+            // Si el usuario no es propietario de la mascota, devuelve un mensaje de error
+            return response()->json(['error' => 'No tienes permiso para ver los logros de esta mascota'], 403);
+        }
+
+        // Utiliza el método logrosAsignados del modelo Informacion para obtener los logros de la mascota
+        $logrosAsignados = $informacionMascota->logrosAsignados($mascotaId);
+
+        // Puedes devolver los logros asignados como una respuesta JSON o realizar cualquier otra acción según tus necesidades
+        return response()->json($logrosAsignados);
+    }
 
 
 }
