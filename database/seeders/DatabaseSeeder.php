@@ -16,10 +16,10 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
         $this->call(TipoMascotaSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(InformacionSeeder::class);
         $this->call(ActividadSeeder::class);
         $this->call(AgendamientoSeeder::class);
-        $this->call(InformacionSeeder::class);
-        $this->call(Informacion_ActividadSeeder::class);
+        //$this->call(Informacion_ActividadSeeder::class);
         $this->call(AdminSeeder::class);
 
 

@@ -49,7 +49,7 @@ Route::get('/generar-reporte-cumplimiento-mensual', [reporte_cumplimientoApiCont
 
 
 
-Route::get('/reportes/{usuarioId}/cumplimiento-mensual', [reporte_cumplimientoApiController::class, 'generarReporteCumplimientoMensualPorUsuario'])->name('reporte.cumplimiento.mensual');
+//Route::get('/reportes/{usuarioId}/cumplimiento-mensual', [reporte_cumplimientoApiController::class, 'generarReporteCumplimientoMensualPorUsuario'])->name('reporte.cumplimiento.mensual');
 
 
 Route::post('/asignar-actividad-tipo-mascota', [ActividadApiController::class, 'asignarActividadTipoMascota']);
@@ -107,6 +107,8 @@ Route::group([
           Route::get('/mascotas/{mascotaId}/logros', [mascota_has_logrosApiController::class, 'obtenerLogrosDeMascota']);
 
           Route::get('/getMascotasByUserId/{id}', [InformacionApiController::class, 'getMascotasByUserId']);
+
+          Route::get('/reportes/{usuarioId}/cumplimiento-mensual', [reporte_cumplimientoApiController::class, 'generarReporteCumplimientoMensualPorUsuario'])->name('reporte.cumplimiento.mensual');
 
 
 

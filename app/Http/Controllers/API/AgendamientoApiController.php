@@ -12,6 +12,8 @@ use App\Models\Informacion;
 use App\Models\User;
 use App\Models\Reporte_cumplimiento;
 use App\Http\Controllers\API\LogrosApiController;
+use DateTime;
+use DateInterval;
 
 
 use App\Http\Controllers\Controller;
@@ -159,6 +161,26 @@ return response()->json(['actividades' => $timeTotal], 200);
 }
 
 
+public function sumar_tiempos($hora1, $hora2)
+{
+    list($h1, $m1, $s1) = explode(':', $hora1); //Separo los elementos de la segunda hora
+    list($h2, $m2, $s2) = explode(':', $hora2); //Separo los elementos de la segunda hora
+
+    $ss = $s1+$s2;
+    $mm = $m1+$m2;
+    $hh = $h1+$h2;
+    if ($ss > 59) {
+        $ss = $ss - 60;
+        $mm++;
+    }
+    if ($mm > 59) {
+        $mm = $mm - 60;
+        $hh++;
+    }
+
+
+    return ''.$hh.':'.$mm.':'.$ss; //Retorno la Suma
+}
 
 
 
@@ -225,10 +247,12 @@ public function actualizarTiempoTotalPorMascota(Request $request)
 
     $time1 = $mascota->tiempo_total;
     $time2 = $tiempo;
-    $secs = strtotime($time2) - strtotime("00:00:00");
-    $result = date("H:i:s", strtotime($time1) + $secs);
+    //$secs = strtotime($time2) - strtotime("00:00:00");
+    //$result = date("H:i:s", strtotime($time1) + $secs);
+    $result = $this->sumar_tiempos($time1, $time2);
 
     $mascota->tiempo_total=$result;
+    //$mascota->tiempo_total='28:00:00';
     $mascota->save();
 
 
