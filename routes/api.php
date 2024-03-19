@@ -161,6 +161,7 @@ Route::group([
           //Route::get('Agendamiento-user',[AgendamientoApiController::class,"index"] );
           Route::get('Actividad-user', [ActividadApiController ::class,"index"]);
           Route::get('Informacion-user', [InformacionApiController::class,"index"]);
+          Route::put('Usuario-user/{id}', [UsuarioApiController::class,"update"]);
         });
       });
 });

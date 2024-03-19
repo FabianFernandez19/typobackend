@@ -82,12 +82,16 @@ class UsuarioApiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'name'=>'required',
-            'email' =>'required|email|uniqued:users,email'.id,
-            'password'=>'same:confirm-password',
-            'roles'=>'required'
-            ]);
+        $this->validate($request, [
+            'user.name' => 'sometimes|required',
+            'user.apellido' => 'sometimes|required',
+            'user.telefono' => 'sometimes|required',
+            'user.fecha_nacimiento' => 'sometimes|required',
+            'user.email' => 'sometimes|required',
+            'user.password' => 'sometimes|same:user.confirm-password',
+            'user.roles' => 'sometimes|required'
+        ]);
+        
 
             $input = $request->all();
             if (!empty($input['password'])){
