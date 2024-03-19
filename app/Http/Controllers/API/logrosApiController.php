@@ -35,7 +35,7 @@ class LogrosApiController extends Controller
 {
     $request->validate([
         'tipoLogro' => 'required|string',
-        'tiempoSemanal' => 'required|date_format:H:i:s',
+        'tiempoSemanal' => 'required|regex:/([0-9][0-9]:[0-9][0-9]:[0-9][0-9])/u',
         
     ]);
     
@@ -54,7 +54,8 @@ class LogrosApiController extends Controller
     {
         $request->validate([
             'tipoLogro' => 'required|string',
-            'tiempoSemanal' => 'required|date_format:H:i:s',
+            //'tiempoSemanal' => 'required|date_format:H:i:s',
+            'tiempoSemanal' => 'required|regex:/([0-9][0-9]:[0-9][0-9]:[0-9][0-9])/u'
             
         ]);
     
