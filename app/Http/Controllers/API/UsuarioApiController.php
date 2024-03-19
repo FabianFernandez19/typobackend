@@ -90,14 +90,13 @@ class UsuarioApiController extends Controller
             'user.email' => 'sometimes|required',
             'user.password' => 'sometimes|same:user.confirm-password',
             'user.roles' => 'sometimes|required'
-        ]);
-        
+        ]);        
 
             $input = $request->all();
             if (!empty($input['password'])){
                 $input['password'] = Hash::make($input['password']);
             }else{
-                $input = Arr::except($input, array('password'));
+                unset($input['password']);
             }
 
             $user = User::find($id);
