@@ -144,7 +144,7 @@ class ActividadApiController extends Controller
 
     
 }
-
+ //funcion para mostrar las actividades para cada tipo de mascota
 public function obtenerActividadesMascota($id){
     $actividadmascota = tipomascota_has_actividad::where("tipomascota_id", $id)->get();
     
@@ -162,7 +162,7 @@ public function obtenerActividadesMascota($id){
 
 }
 
-
+//funcion para asignar actividades a tipos de mascota especific
 public function asignarActividadTipoMascota(Request $request)
 {
    

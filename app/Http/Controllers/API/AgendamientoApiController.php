@@ -45,19 +45,12 @@ class AgendamientoApiController extends Controller
         $agendamiento = new Agendamiento();
         $agendamiento->tiempo_asignado_actividad = $request->tiempo_asignado_actividad;
         $agendamiento->Fecha_Agendamiento = $request->Fecha_Agendamiento;
-        if(strlen($request->cumplida)>0){
-            $agendamiento->cumplida = $request->cumplida;   
-        }else{
-            $agendamiento->cumplida = false;
-        }
         $agendamiento->cumplida = $request->cumplida;
         $agendamiento->infomascota_id = $request->infomascota_id;
         $agendamiento->actividades_id = $request->actividades_id;
         $agendamiento->user_id = $request->user_id;
         $agendamiento->save();
         return response()->json($agendamiento, 200);
-
-        
     }
 
     public function show($id)
@@ -163,7 +156,8 @@ return response()->json(['actividades' => $timeTotal], 200);
 
 
 
-
+//funcion principal para cuando se marque el agendamiento como cumplido se haga el proceso de guardar el tiempo
+//y verificar si se asignaron logros
 
 public function actualizarTiempoTotalPorMascota(Request $request)
 {    
@@ -270,9 +264,10 @@ public function actualizarTiempoTotalPorMascota(Request $request)
     return response()->json(['mensaje' => 'Tiempos totales de mascotas actualizados correctamente'], 200);
 }
 
-
+//funcion para mostrar los agendamientos de cada mascota
 public function agendamientosPorMascota($idMascota)
-{
+{  
+    $user = Auth::user();
     $mascota = Informacion::findOrFail($idMascota);
     
     // Obtén los agendamientos asociados a la mascota específica
