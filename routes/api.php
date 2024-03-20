@@ -53,6 +53,10 @@ Route::get('/generar-reporte-cumplimiento-mensual', [reporte_cumplimientoApiCont
 
 
 
+//Route::get('/reportes/{usuarioId}/cumplimiento-mensual', [reporte_cumplimientoApiController::class, 'generarReporteCumplimientoMensualPorUsuario'])->name('reporte.cumplimiento.mensual');
+
+
+
 Route::post('/asignar-actividad-tipo-mascota', [ActividadApiController::class, 'asignarActividadTipoMascota']);
 
 
@@ -114,8 +118,19 @@ Route::group([
           //ruta para mostrar las mascotas de cada usuario
           Route::get('/getMascotasByUserId/{id}', [InformacionApiController::class, 'getMascotasByUserId']);
 
+
          //ruta para mostrar el reporte de cumplimiento por usuario
           Route::get('/reportes/{usuarioId}/cumplimiento-mensual', [reporte_cumplimientoApiController::class, 'generarReporteCumplimientoMensualPorUsuario'])->name('reporte.cumplimiento.mensual');
+
+          Route::get('/mascotas/{mascotaId}/logros', [mascota_has_logrosApiController::class, 'obtenerLogrosDeMascota']);
+
+          Route::get('/getMascotasByUserId/{id}', [InformacionApiController::class, 'getMascotasByUserId']);
+
+          Route::get('/reportes/{usuarioId}/cumplimiento-mensual', [reporte_cumplimientoApiController::class, 'generarReporteCumplimientoMensualPorUsuario'])->name('reporte.cumplimiento.mensual');
+
+
+
+
 
          
          //ruta para mostrar la informacion del usuario y todas las relaciones uncluyendo mascotas etc
@@ -168,6 +183,7 @@ Route::group([
           //Route::get('Agendamiento-user',[AgendamientoApiController::class,"index"] );
           Route::get('Actividad-user', [ActividadApiController ::class,"index"]);
           Route::get('Informacion-user', [InformacionApiController::class,"index"]);
+          Route::put('Usuario-user/{id}', [UsuarioApiController::class,"update"]);
         });
       });
 });

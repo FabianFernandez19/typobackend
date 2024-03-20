@@ -63,11 +63,14 @@ where i.user_id = 7; */
    
         return response()->json(['message' => 'mascotaHasLogro eliminado correctamente'], 200);
     }
+
     
     //funcion para mostrar los logros que tiene cada tipo de mascota
+   
     public function obtenerLogrosDeMascota($mascotaId)
-    {  
-        $user = Auth::user();
+    {
+
+       $user = Auth::user();
         // Encuentra la información de la mascota por su ID
         $informacionMascota = Informacion::find($mascotaId);
 
