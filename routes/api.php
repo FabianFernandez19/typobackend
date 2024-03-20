@@ -122,11 +122,11 @@ Route::group([
          //ruta para mostrar el reporte de cumplimiento por usuario
           Route::get('/reportes/{usuarioId}/cumplimiento-mensual', [reporte_cumplimientoApiController::class, 'generarReporteCumplimientoMensualPorUsuario'])->name('reporte.cumplimiento.mensual');
 
-          Route::get('/mascotas/{mascotaId}/logros', [mascota_has_logrosApiController::class, 'obtenerLogrosDeMascota']);
+          //Route::get('/mascotas/{mascotaId}/logros', [mascota_has_logrosApiController::class, 'obtenerLogrosDeMascota']);
 
           Route::get('/getMascotasByUserId/{id}', [InformacionApiController::class, 'getMascotasByUserId']);
 
-          Route::get('/reportes/{usuarioId}/cumplimiento-mensual', [reporte_cumplimientoApiController::class, 'generarReporteCumplimientoMensualPorUsuario'])->name('reporte.cumplimiento.mensual');
+          //Route::get('/reportes/{usuarioId}/cumplimiento-mensual', [reporte_cumplimientoApiController::class, 'generarReporteCumplimientoMensualPorUsuario'])->name('reporte.cumplimiento.mensual');
 
 
 
