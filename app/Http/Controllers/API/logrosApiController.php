@@ -11,7 +11,7 @@ use App\Models\Mascota_has_logros;
 use Illuminate\Support\Facades\DB;
 
 
-class LogrosApiController extends Controller
+class logrosApiController extends Controller
 {
     public function index()
     {
