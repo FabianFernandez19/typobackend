@@ -115,7 +115,8 @@ class InformacionApiController extends Controller
      */
 
     public function getMascotasByUserId($id)
-    {
+    {   
+        $user = Auth::user();
         $informacion = DB::table("informacion")->where("user_id", "=", $id)->get();
         if (!$informacion) {
             return response()->json(['message' => 'Informacion de Mascoto no encontrada'], 404);

@@ -73,7 +73,7 @@ class LogrosApiController extends Controller
 
    public function asignarLogrosAMascotas()
 {
-   
+    $user = Auth::user();
     $mascotas = Informacion::all();
 
     $tiempos = array();

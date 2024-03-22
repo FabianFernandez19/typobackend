@@ -80,8 +80,10 @@ class reporte_cumplimientoApiController extends Controller
             $this->generarReporteCumplimientoMensualPorUsuario($cliente->id);
         }
     }
+    
 
     public function generarReporteCumplimientoMensualPorUsuario($usuarioId)
+
 {   
     $user = Auth::user();
     // Obtener el primer y último día del mes actual
