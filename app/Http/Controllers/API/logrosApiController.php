@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Logros;
+use App\Models\logros;
 use App\Models\Informacion;
 use App\Models\Mascota_has_logros;
 use Illuminate\Support\Facades\DB;
