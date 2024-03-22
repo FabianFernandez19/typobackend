@@ -11,7 +11,7 @@ use App\Models\Agendamiento;
 use App\Models\Informacion;
 use App\Models\User;
 use App\Models\Reporte_cumplimiento;
-use App\Http\Controllers\API\LogrosApiController;
+use App\Http\Controllers\API\logrosApiController;
 use DateTime;
 use DateInterval;
 
