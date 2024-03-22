@@ -123,6 +123,7 @@ class InformacionApiController extends Controller
         return response()->json($informacion, 200);
     }
 
+    
 
 
 
