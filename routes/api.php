@@ -12,7 +12,7 @@ use App\Http\Controllers\API\Informacion_ActividadController;
 use App\Http\Controllers\API\RolApiController;
 use App\Http\Controllers\API\UsuarioApiController;
 use App\Http\Controllers\API\reporte_cumplimientoApiController;
-use App\Http\Controllers\API\logrosApiController;
+use App\Http\Controllers\API\LogrosApiController;
 use App\Http\Controllers\API\UserhaslogrosApiController; 
 use App\Http\Controllers\API\mascota_has_logrosApiController; 
 
